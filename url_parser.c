@@ -450,11 +450,12 @@ http_parse_host_char(enum http_host_state s, const char ch) {
 
 static int
 http_parse_host(const char * buf, struct http_parser_url *u, int found_at) {
-  assert(u->field_set & (1 << UF_HOST));
   enum http_host_state s;
 
   const char *p;
   size_t buflen = u->field_data[UF_HOST].off + u->field_data[UF_HOST].len;
+
+  assert(u->field_set & (1 << UF_HOST));
 
   u->field_data[UF_HOST].len = 0;
 
@@ -566,7 +567,7 @@ http_parser_parse_url(const char *buf, size_t buflen, int is_connect,
       case s_req_server_with_at:
         found_at = 1;
 
-      /* FALLTROUGH */
+      /* FALLTHROUGH */
       case s_req_server:
         uf = UF_HOST;
         break;

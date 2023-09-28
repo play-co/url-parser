@@ -5,8 +5,6 @@
 
 int main() {
 
-    char buf[1024];
-
     struct http_parser_url parse_info;
     const char *url = "ws://debug.example.com:123/my/path";
 
@@ -14,9 +12,8 @@ int main() {
 
 #define PRINT(field) \
     do { \
-        snprintf(buf, parse_info.field_data[field].len + 1, "%s", \
-                &url[parse_info.field_data[field].off]); \
-        printf( #field ": %s\n", buf); \
+        printf( #field ": %*s\n", parse_info.field_data[field].len, \
+                &url[parse_info.field_data[field].off]);            \
     } while (0)
 
     printf("port: %d\n", parse_info.port);
